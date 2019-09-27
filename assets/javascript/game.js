@@ -18,47 +18,65 @@
 
 
 function randLetter() {
-    var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-    var getLetter = letters[Math.floor(Math.random() * letters.length)];
+    let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    let getLetter = letters[Math.floor(Math.random() * letters.length)];
     return getLetter;
 }
 
-// function reset() {
+ function reset() {
+    //reset chances back to 9 
+    //call new randLetter 
+    //clear the guessesLetter HTML 
+    chances = 9;
+    letter = randLetter(); 
+    console.log("hit reset function");
+    console.log(chances); 
+    console.log(letter);
+    guessed=[]; 
+ }
 
-// }
-
-var chances = 9;
-var letter = randLetter(); 
-var win = 0;
-var loss = 0;
-
+let chances = 9;
+let letter = randLetter(); 
+let win = 0;
+let loss = 0;
+let guessed = []; 
+//when a key is pressed 
     document.onkeyup = function(event) {
             
-            var userGuess = event.key;
+            let userGuess = event.key;
             
             document.getElementById("guessedLetters").innerHTML = userGuess; 
 
             if (userGuess != letter) {
-                chances = chances - 1; 
-                userGuess;
+                chances--; 
+                userGuess; 
+                checker(chances); 
+                //add letter to guessed array and show change id guessedLetters
+                guessed.push(userGuess); 
             }
 
             else if (userGuess == letter) {
                 win++; 
                 userChoiceText = userGuess;
-                //call reset game function
+                reset(); 
             }
+            function checker(e) {
+                if (chances == 0) {
+                    loss++; 
+                    reset(); 
 
-            // if (chances == 0) {
+            }
+        }
+            
+            document.getElementById("guessedLetters").innerHTML = guessed;
+            document.getElementById("loss").innerHTML = loss;
+            document.getElementById("left").innerHTML = chances;
+            document.getElementById("wins").innerHTML = win;
 
-            //call reset game function 
-                
-
-            // }
-
+            
+        console.log(chances); 
         console.log(letter);
-        console.log(win);
-        console.log(chances);
+        console.log(win); 
         console.log(userGuess); 
     
     }; 
